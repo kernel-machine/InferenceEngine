@@ -1,0 +1,35 @@
+{
+    "name": "streaming_service",
+    "build": {
+      "dockerfile": "../../streaming_service/Dockerfile",
+      "context": "."
+    },
+    "shutdownAction": "none",
+    //"remoteUser": "nobody",
+    "workspaceMount": "source=${localWorkspaceFolder}/streaming_service,target=/workspace,type=bind",
+    "workspaceFolder": "/workspace",
+    "runArgs": [
+      "--name","streaming_service",
+      "--net=host"
+    ],
+    "postCreateCommand": [],
+    "customizations": {
+      "vscode": {
+        "settings": {
+          "python.testing.pytestArgs": [
+            "."
+          ],
+          "python.testing.unittestEnabled": false,
+          "python.testing.pytestEnabled": true,
+          "python.formatting.provider": "black",
+          "python.linting.enabled": true,
+          "terminal.integrated.defaultProfile.linux": "bash"
+        },
+        "extensions": [
+          "ms-toolsai.tensorboard",
+          "ms-python.python",
+          "ms-azuretools.vscode-docker"
+        ]
+      }
+    }
+  }

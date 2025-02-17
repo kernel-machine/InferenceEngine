@@ -1,16 +1,16 @@
 {
-    "name": "frame_extractor",
+    "name": "frame_generator",
     "build": {
-      "dockerfile": "../../frame_extractor/Dockerfile",
+      "dockerfile": "../../frame_generator/Dockerfile",
       "context": "."
     },
     "shutdownAction": "none",
-    "remoteUser": "ubuntu",
-    "workspaceMount": "source=${localWorkspaceFolder}/frame_extractor,target=/workspace,type=bind",
+    //"remoteUser": "nobody",
+    "workspaceMount": "source=${localWorkspaceFolder}/frame_generator,target=/workspace,type=bind",
     "workspaceFolder": "/workspace",
     "runArgs": [
-      "--name","frame_extractor",
-      "--net=varroa_bridge"
+      "--name","frame_generator",
+      "--net=host"
     ],
     "postCreateCommand": [],
     "customizations": {
@@ -34,7 +34,7 @@
     },
     "mounts": [
       {
-        "source": "/ssd/dataset",
+        "source": "/ssd/dataset/dataset_v2_raw_s32_val",
         "target": "/dataset",
         "type": "bind"
       }

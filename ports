@@ -1,0 +1,26 @@
+FRAME GENERATOR:
+- Listen: 50001
+FRAME CROPPER:
+- Listen: 50002
+USER INTERFACE:
+- Listen: 50003
+
+services:
+  streaming_service:
+    privileged: true
+    container_name: streming
+    image: streaming_service
+    build:
+      context: ./streaming_service
+    ports:
+      - "5000:5000"
+
+    # extra settings for X11 linux users
+    # environment:
+      # - DISPLAY
+    devices:
+      - "/dev/video1:/dev/video1"
+      - "/dev/video2:/dev/video2"
+    network_mode: host
+    ipc: host
+    tty: true

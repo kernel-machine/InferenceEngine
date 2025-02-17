@@ -1,0 +1,17 @@
+services:
+  frame_generator:
+    build: ./frame_generator
+    network_mode: host
+    volumes:
+      - /ssd/dataset/dataset_v2_raw_s32_val:/dataset
+  frame_cropper:
+    build: ./frame_cropper
+    network_mode: host
+    depends_on:
+      - frame_generator
+    ipc: "host"
+  streaming_service:
+    build: ./streaming_service
+    network_mode: host
+    depends_on:
+      - frame_cropper

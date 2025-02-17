@@ -1,0 +1,42 @@
+{
+    "name": "frame_cropper",
+    "build": {
+      "dockerfile": "../../frame_cropper/Dockerfile",
+      "context": "."
+    },
+    "shutdownAction": "none",
+    "remoteUser": "ubuntu",
+    "workspaceMount": "source=${localWorkspaceFolder}/frame_cropper,target=/workspace,type=bind",
+    "workspaceFolder": "/workspace",
+    "runArgs": [
+      "--name","frame_cropper",
+      "--net=host"
+    ],
+    "postCreateCommand": [],
+    "customizations": {
+      "vscode": {
+        "settings": {
+          "python.testing.pytestArgs": [
+            "."
+          ],
+          "python.testing.unittestEnabled": false,
+          "python.testing.pytestEnabled": true,
+          "python.formatting.provider": "black",
+          "python.linting.enabled": true,
+          "terminal.integrated.defaultProfile.linux": "bash"
+        },
+        "extensions": [
+          "ms-toolsai.tensorboard",
+          "ms-python.python",
+          "ms-azuretools.vscode-docker"
+        ]
+      }
+    },
+    "mounts": [
+      {
+        "source": "/ssd/dataset",
+        "target": "/dataset",
+        "type": "bind"
+      }
+    ]
+  }
