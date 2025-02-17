@@ -1,0 +1,42 @@
+{
+    "name": "frame_extractor",
+    "build": {
+      "dockerfile": "../../frame_extractor/Dockerfile",
+      "context": "."
+    },
+    "shutdownAction": "none",
+    "remoteUser": "ubuntu",
+    "workspaceMount": "source=${localWorkspaceFolder}/frame_extractor,target=/workspace,type=bind",
+    "workspaceFolder": "/workspace",
+    "runArgs": [
+      "--name","frame_extractor",
+      "--net=varroa_bridge"
+    ],
+    "postCreateCommand": [],
+    "customizations": {
+      "vscode": {
+        "settings": {
+          "python.testing.pytestArgs": [
+            "."
+          ],
+          "python.testing.unittestEnabled": false,
+          "python.testing.pytestEnabled": true,
+          "python.formatting.provider": "black",
+          "python.linting.enabled": true,
+          "terminal.integrated.defaultProfile.linux": "bash"
+        },
+        "extensions": [
+          "ms-toolsai.tensorboard",
+          "ms-python.python",
+          "ms-azuretools.vscode-docker"
+        ]
+      }
+    },
+    "mounts": [
+      {
+        "source": "/ssd/dataset",
+        "target": "/dataset",
+        "type": "bind"
+      }
+    ]
+  }

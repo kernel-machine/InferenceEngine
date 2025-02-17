@@ -1,0 +1,44 @@
+{
+  "name": "inference_module",
+  "build": {
+    "dockerfile": "../../inference_module/Dockerfile",
+    "context": "."
+  },
+  "shutdownAction": "none",
+  "remoteUser": "ubuntu",
+  "postCreateCommand": [],
+  "workspaceMount": "source=${localWorkspaceFolder}/inference_module,target=/workspace,type=bind",
+  "workspaceFolder": "/workspace",
+  "runArgs": [
+    "--name","inference_module",
+    "--gpus",
+    "\"device=0\"",
+    "--net=varroa_bridge"
+  ],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.testing.pytestArgs": [
+          "."
+        ],
+        "python.testing.unittestEnabled": false,
+        "python.testing.pytestEnabled": true,
+        "python.formatting.provider": "black",
+        "python.linting.enabled": true,
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": [
+        "ms-toolsai.tensorboard",
+        "ms-python.python",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+  "mounts": [
+    {
+      "source": "/ssd/dataset",
+      "target": "/dataset",
+      "type": "bind"
+    }
+  ]
+}
