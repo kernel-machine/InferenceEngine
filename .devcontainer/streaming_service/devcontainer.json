@@ -1,16 +1,16 @@
 {
     "name": "streaming_service",
     "build": {
-      "dockerfile": "../../streaming_service/Dockerfile",
+      "dockerfile": "../../streaming_service/Dockerfile.dev",
       "context": "."
     },
     "shutdownAction": "none",
-    //"remoteUser": "nobody",
+    "remoteUser": "noroot",
     "workspaceMount": "source=${localWorkspaceFolder}/streaming_service,target=/workspace,type=bind",
     "workspaceFolder": "/workspace",
     "runArgs": [
       "--name","streaming_service",
-      "--net=host"
+      "--network=dev-network"
     ],
     "postCreateCommand": [],
     "customizations": {

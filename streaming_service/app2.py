@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 context = zmq.Context()
 frame_generator = context.socket(zmq.REQ)
-frame_generator.connect ("tcp://127.0.0.1:5002")
+frame_generator.connect ("tcp://frame-cropper:5002")
 
 def decode_images(data) -> tuple[list[cv2.Mat], bool]:
     """Estrae le immagini dal buffer binario ricevuto."""

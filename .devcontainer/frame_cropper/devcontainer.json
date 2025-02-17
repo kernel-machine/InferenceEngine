@@ -1,16 +1,16 @@
 {
     "name": "frame_cropper",
     "build": {
-      "dockerfile": "../../frame_cropper/Dockerfile",
+      "dockerfile": "../../frame_cropper/Dockerfile.dev",
       "context": "."
     },
     "shutdownAction": "none",
-    "remoteUser": "ubuntu",
+    "remoteUser": "noroot",
     "workspaceMount": "source=${localWorkspaceFolder}/frame_cropper,target=/workspace,type=bind",
     "workspaceFolder": "/workspace",
     "runArgs": [
       "--name","frame_cropper",
-      "--net=host"
+      "--nework=dev-network"
     ],
     "postCreateCommand": [],
     "customizations": {

@@ -1,16 +1,16 @@
 {
     "name": "frame_generator",
     "build": {
-      "dockerfile": "../../frame_generator/Dockerfile",
+      "dockerfile": "../../frame_generator/Dockerfile.dev",
       "context": "."
     },
     "shutdownAction": "none",
-    //"remoteUser": "nobody",
+    "remoteUser": "noroot",
     "workspaceMount": "source=${localWorkspaceFolder}/frame_generator,target=/workspace,type=bind",
     "workspaceFolder": "/workspace",
     "runArgs": [
       "--name","frame_generator",
-      "--net=host"
+      "--network=dev-network"
     ],
     "postCreateCommand": [],
     "customizations": {
@@ -34,7 +34,7 @@
     },
     "mounts": [
       {
-        "source": "/ssd/dataset/dataset_v2_raw_s32_val",
+        "source": "/home/luca/dataset_raw",
         "target": "/dataset",
         "type": "bind"
       }

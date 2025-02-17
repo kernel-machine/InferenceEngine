@@ -38,6 +38,7 @@ if os.path.isdir(args.video):
             for segment in frame_buffer.get_segments():
                 print("Wait for request...")
                 message = socket.recv()
+                print(f"Received: {message}")
                 if message==b"frames":
                     images = []
                     for img in segment:
