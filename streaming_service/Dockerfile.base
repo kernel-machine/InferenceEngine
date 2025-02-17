@@ -1,0 +1,8 @@
+FROM streaming_service:dev
+
+WORKDIR /workdir
+COPY . /workdir
+RUN python3.11 -m venv env
+RUN ./env/bin/pip install -r requirements.txt
+
+CMD ["./env/bin/python","app2.py"]

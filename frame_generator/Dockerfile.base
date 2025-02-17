@@ -1,0 +1,11 @@
+FROM frame_generator:dev
+
+WORKDIR /workdir
+
+# # Copy the current directory contents into the container at /workdir
+COPY . /workdir
+# # [Optional] Set the default user. Omit if you want to keep the default as root.
+
+RUN python3.11 -m venv env
+RUN ./env/bin/pip install -r requirements.txt
+CMD ["./env/bin/python3.11","main.py","--video","/dataset"]
