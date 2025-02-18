@@ -8,7 +8,6 @@ import random
 import time
 import numpy as np
 from VideoSegmenter import VideoSegmenter
-from frame_buffer import FrameBuffer
 import asyncio
 import queue
 import threading

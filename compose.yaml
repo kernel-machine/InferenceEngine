@@ -1,5 +1,6 @@
 services:
   frame-generator-dev:
+    image: frame_generator:dev
     build:
       context: ./frame_generator
       dockerfile: Dockerfile.dev
@@ -8,12 +9,14 @@ services:
       context: ./frame_generator
       dockerfile: Dockerfile.base
     volumes:
-      - /home/luca/dataset_raw:/dataset
+      - /ssd/dataset/dataset_v2_raw_s32_val:/dataset
     networks:
       - mynetwork
     depends_on:
       - frame-generator-dev
+  
   frame-cropper-dev:
+    image: frame_cropper:dev
     build: 
       context: ./frame_cropper
       dockerfile: Dockerfile.dev
@@ -29,6 +32,7 @@ services:
       - mynetwork
 
   streaming-service-dev:
+    image: streaming_service:dev
     build: 
       context: ./streaming_service
       dockerfile: Dockerfile.dev
