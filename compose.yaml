@@ -1,0 +1,49 @@
+services:
+  frame-generator-dev:
+    build:
+      context: ./frame_generator
+      dockerfile: Dockerfile.dev
+  frame-generator:
+    build:
+      context: ./frame_generator
+      dockerfile: Dockerfile.base
+    volumes:
+      - /home/luca/dataset_raw:/dataset
+    networks:
+      - mynetwork
+    depends_on:
+      - frame-generator-dev
+  frame-cropper-dev:
+    build: 
+      context: ./frame_cropper
+      dockerfile: Dockerfile.dev
+  frame-cropper:
+    build: 
+      context: ./frame_cropper
+      dockerfile: Dockerfile.base
+    depends_on:
+      - frame-cropper-dev
+      - frame-generator
+    ipc: "host"
+    networks:
+      - mynetwork
+
+  streaming-service-dev:
+    build: 
+      context: ./streaming_service
+      dockerfile: Dockerfile.dev
+  streaming-service:
+    build: 
+      context: ./streaming_service
+      dockerfile: Dockerfile.base
+    depends_on:
+      - frame-cropper
+      - streaming-service-dev
+    ports:
+      - 8000:5003
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge

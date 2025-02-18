@@ -13,7 +13,7 @@
     "--name","inference_module",
     "--gpus",
     "\"device=0\"",
-    "--net=varroa_bridge"
+    "--net=host"
   ],
   "customizations": {
     "vscode": {

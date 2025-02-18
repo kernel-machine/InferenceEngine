@@ -1,16 +1,16 @@
 {
-    "name": "frame_extractor",
+    "name": "streaming_service",
     "build": {
-      "dockerfile": "../../frame_extractor/Dockerfile",
+      "dockerfile": "../../streaming_service/Dockerfile.dev",
       "context": "."
     },
     "shutdownAction": "none",
-    "remoteUser": "ubuntu",
-    "workspaceMount": "source=${localWorkspaceFolder}/frame_extractor,target=/workspace,type=bind",
+    "remoteUser": "noroot",
+    "workspaceMount": "source=${localWorkspaceFolder}/streaming_service,target=/workspace,type=bind",
     "workspaceFolder": "/workspace",
     "runArgs": [
-      "--name","frame_extractor",
-      "--net=varroa_bridge"
+      "--name","streaming_service",
+      "--network=dev-network"
     ],
     "postCreateCommand": [],
     "customizations": {
@@ -31,12 +31,5 @@
           "ms-azuretools.vscode-docker"
         ]
       }
-    },
-    "mounts": [
-      {
-        "source": "/ssd/dataset",
-        "target": "/dataset",
-        "type": "bind"
-      }
-    ]
+    }
   }

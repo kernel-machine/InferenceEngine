@@ -1,8 +1,11 @@
 from flask import Flask, Response
 import cv2
+<<<<<<< HEAD
 import sys
 import signal
 import time
+=======
+>>>>>>> origin/main
 
 app = Flask(__name__)
 
@@ -11,6 +14,7 @@ app = Flask(__name__)
 camera_id = "/dev/video0"
 # Full list of Video Capture APIs (video backends): https://docs.opencv.org/3.4/d4/d15/group__videoio__flags__base.html
 # For webcams, we use V4L2
+<<<<<<< HEAD
 video_capture = cv2.VideoCapture(camera_id)
 # How to set video capture properties using V4L2:
 # Full list of Video Capture Properties for OpenCV: https://docs.opencv.org/3.4/d4/d15/group__videoio__flags__base.html
@@ -18,6 +22,15 @@ video_capture = cv2.VideoCapture(camera_id)
 video_capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'YUYV'))
 # Two common formats, MJPG and H264
 # video_capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
+=======
+video_capture = cv2.VideoCapture(camera_id, cv2.CAP_V4L2)
+# How to set video capture properties using V4L2:
+# Full list of Video Capture Properties for OpenCV: https://docs.opencv.org/3.4/d4/d15/group__videoio__flags__base.html
+#Select Pixel Format:
+# video_capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'YUYV'))
+# Two common formats, MJPG and H264
+video_capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
+>>>>>>> origin/main
 # Default libopencv on the Jetson is not linked against libx264, so H.264 is not available
 # video_capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'H264'))
 # Select frame size, FPS:
@@ -25,6 +38,7 @@ video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 video_capture.set(cv2.CAP_PROP_FPS, 30)
 # camera = cv2.VideoCapture(1, cv2.CAP_V4L)
+<<<<<<< HEAD
 camera_ready = False
 while not camera_ready:
     if not (video_capture.isOpened()):
@@ -35,6 +49,13 @@ while not camera_ready:
     else:
         camera_ready = True
 
+=======
+if not (video_capture.isOpened()):
+    print("Could not open video device")
+
+import sys
+import signal
+>>>>>>> origin/main
 def handler(signal, frame):
     print("\nGracefully shutting down...")
     if video_capture.isOpened():
