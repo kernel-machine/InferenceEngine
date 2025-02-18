@@ -1,20 +1,14 @@
 from flask import Flask, Response
 import cv2
-<<<<<<< HEAD
 import sys
 import signal
 import time
-=======
->>>>>>> origin/main
 
 app = Flask(__name__)
 
-# Open webcam
-# ASSIGN CAMERA ADDRESS HERE
-camera_id = "/dev/video0"
+"""
 # Full list of Video Capture APIs (video backends): https://docs.opencv.org/3.4/d4/d15/group__videoio__flags__base.html
 # For webcams, we use V4L2
-<<<<<<< HEAD
 video_capture = cv2.VideoCapture(camera_id)
 # How to set video capture properties using V4L2:
 # Full list of Video Capture Properties for OpenCV: https://docs.opencv.org/3.4/d4/d15/group__videoio__flags__base.html
@@ -22,15 +16,6 @@ video_capture = cv2.VideoCapture(camera_id)
 video_capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'YUYV'))
 # Two common formats, MJPG and H264
 # video_capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
-=======
-video_capture = cv2.VideoCapture(camera_id, cv2.CAP_V4L2)
-# How to set video capture properties using V4L2:
-# Full list of Video Capture Properties for OpenCV: https://docs.opencv.org/3.4/d4/d15/group__videoio__flags__base.html
-#Select Pixel Format:
-# video_capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'YUYV'))
-# Two common formats, MJPG and H264
-video_capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
->>>>>>> origin/main
 # Default libopencv on the Jetson is not linked against libx264, so H.264 is not available
 # video_capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'H264'))
 # Select frame size, FPS:
@@ -38,7 +23,6 @@ video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 video_capture.set(cv2.CAP_PROP_FPS, 30)
 # camera = cv2.VideoCapture(1, cv2.CAP_V4L)
-<<<<<<< HEAD
 camera_ready = False
 while not camera_ready:
     if not (video_capture.isOpened()):
@@ -48,33 +32,36 @@ while not camera_ready:
         time.sleep(3)
     else:
         camera_ready = True
+"""
 
-=======
-if not (video_capture.isOpened()):
-    print("Could not open video device")
-
-import sys
-import signal
->>>>>>> origin/main
+"""
 def handler(signal, frame):
     print("\nGracefully shutting down...")
-    if video_capture.isOpened():
+    # nonlocal video_capture
+    if video_capture is not None and video_capture.isOpened():
         video_capture.release()  # Release the camera resource
         print("Camera released.")
     sys.exit(0)
 signal.signal(signal.SIGINT, handler)
+"""
 
 def generate_frames():
-    while True:
-        success, frame = video_capture.read()
-        if not success:
-            break
-        else:
-            # Encode frame as JPEG
-            _, buffer = cv2.imencode('.jpg', frame)
-            frame = buffer.tobytes()
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+    camera_id = "/dev/video2"
+    video_capture = cv2.VideoCapture(camera_id, cv2.CAP_V4L2)
+    if not (video_capture.isOpened()):
+        print("Could not open video device.")
+    else:
+        while True:
+            success, frame = video_capture.read()
+            if not success:
+                break
+            else:
+                # Encode frame as JPEG
+                _, buffer = cv2.imencode('.jpg', frame)
+                frame = buffer.tobytes()
+                yield (b'--frame\r\n'
+                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+    video_capture.release()
 
 @app.route('/video_feed')
 def video_feed():
