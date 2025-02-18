@@ -9,7 +9,7 @@ services:
       context: ./frame_generator
       dockerfile: Dockerfile.base
     volumes:
-      - /media/luca/Home/lucagiovannesi/datasets/prin/raw/dataset_v2_raw_s32_val:/dataset
+      - /ssd/dataset/dataset_v2_raw_s32_val:/dataset
     networks:
       - mynetwork
     depends_on:
